@@ -320,3 +320,142 @@ public class Base64App {
 }
 
 ```
+
+## - OBJECTS CLASS
+Kelas ini terdiri dari utility method static untuk mengoperasikan objek, atau memeriksa kondisi tertentu sebelum pengoperasian. Utilitas ini mencakup metode null-safe atau null-toleransi untuk menghitung kode hash suatu objek, mengembalikan string untuk suatu objek, membandingkan dua objek, dan memeriksa apakah indeks atau nilai sub-rentang berada di luar batas.
+
+```java
+package armul.java.classes;
+
+import java.util.Objects;
+
+public class ObjectsApp {
+	
+	public static class Data{
+		private String data;
+
+		public Data(String data) {
+			this.data = data;
+		}
+
+		@Override
+		public boolean equals(Object object) {
+			if (this == object) return true;
+			if (object == null || getClass() != object.getClass()) return false;
+
+			Data data1 = (Data) object;
+
+			return Objects.equals(data, data1.data);
+		}
+
+		@Override
+		public int hashCode() {
+			return data != null ? data.hashCode() : 0;
+		}
+
+		@Override
+		public String toString() {
+			return "Data{" +
+					"data='" + data + '\'' +
+					'}';
+		}
+	}
+
+	public static void main(String[] args) {
+		
+		execute(new Data("Ari"));
+	}
+	
+	public static void execute(Data data) {
+		System.out.println(Objects.toString(data));
+		System.out.println(Objects.hashCode(data));
+	}
+}
+```
+
+## - RANDOM CLASS
+Sebuah instance dari kelas ini digunakan untuk menghasilkan aliran angka pseudorandom.
+
+```java
+package armul.java.classes;
+
+import java.util.Random;
+
+public class RamdomApp {
+	public static void main(String[] args) {
+
+		Random random = new Random();
+		for (int i = 0; i < 50; i++) {
+			int randomNumber = random.nextInt(2000);
+			System.out.println(randomNumber);
+		}
+	}
+}
+```
+
+## - PROPERTIES CLASS
+Kelas Properties mewakili sekumpulan properti yang persisten. Properti dapat disimpan ke stream atau dimuat dari stream. Setiap key dan value yang terkait dalam daftar properti adalah sebuah string.
+class ini bisa dimanfaatkan untuk membuat configurasi dari aplikasi yang kita buat.
+
+```java
+package armul.java.classes;
+
+import java.io.*;
+import java.util.Properties;
+
+public class PropertiesApp {
+	public static void main(String[] args) {
+
+		Properties properties = new Properties();
+		try {
+		properties.load(new FileInputStream("application.properties"));
+
+			System.out.println(properties.getProperty("database.host"));
+			System.out.println(properties.getProperty("database.port"));
+		}catch (FileNotFoundException exception){
+			exception.printStackTrace();
+		}catch (IOException ioException){
+			ioException.printStackTrace();
+		}
+
+
+		Properties createProperties = new Properties();
+		createProperties.setProperty("name", "Ari Muliansyah Manurung" );
+		createProperties.setProperty("email", "arimuliansyahManurung@gmail.com");
+
+		try {
+		createProperties.store(new FileOutputStream("name.properties"), "properties");
+		}catch (FileNotFoundException exception){
+			exception.printStackTrace();
+		}catch (IOException ioException){
+			ioException.printStackTrace();
+		}
+	}
+}
+```
+
+## - REGEX CLASS
+
+Regular expression merupakan pola untuk pencarian yang lebih kompleks.
+
+```java
+package armul.java.classes;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class RegexApp {
+	public static void main(String[] args) {
+
+		String randomString ="Ari Muliansyah manurung08 Regular Expression01";
+		Pattern pattern = Pattern.compile("[a-zA-Z]*[0-9]");
+
+		Matcher matcher = pattern.matcher(randomString);
+
+		while (matcher.find()) {
+			System.out.println(matcher.group());
+		}
+	}
+}
+
+```
